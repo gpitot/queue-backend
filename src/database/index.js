@@ -18,13 +18,19 @@ const pool = new Pool({
 
 
 async function query(sql, values) {
-    pool.query(sql, values, (err, res) => {
-        pool.end();
-        if (err) {
-            return {success : false, err};
-        }
-        return {success:true, res}
+    pool.connect((err, client, done) => {
+
+        if (err) throw err;
+
+        client.query(sql, values, (err, res) => {
+            done();
+            if (err) {
+                return {success : false, err};
+            }
+            return {success:true, res}
+        })
     })
+    
 }
 
 
