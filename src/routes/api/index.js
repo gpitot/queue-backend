@@ -5,7 +5,8 @@ var {
 } = require('./validation');
 
 var {
-    query
+    query,
+    createTable
 } = require('../../database');
 
 //adds user to queue
@@ -46,13 +47,13 @@ router.get(`/queue`, auth.required, (req, res, next) => {
 });
 
 
-// router.post(`/create`, (req, res, next) => {
+router.post(`/create`, (req, res, next) => {
 
-//     createTable(req.body.sql, (result) => {
-//         res.json(result);
-//     });
+    createTable(req.body.sql, (result) => {
+        res.json(result);
+    });
     
-// });
+});
 
 
 
