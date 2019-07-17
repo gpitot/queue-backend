@@ -52,5 +52,6 @@ async function createTable(sql, cb) {
 
 
 module.exports = {
-    query
+    query,
+    createTable
 }
