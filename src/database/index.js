@@ -16,20 +16,17 @@ const pool = new Pool({
 });
 
 
-function addUserToQueue(user) {
-    
+
+async function query(sql, values) {
+    pool.query(sql, values, (err, res) => {
+        pool.end();
+        if (err) {
+            return {success : false, err};
+        }
+        return {success:true, res}
+    })
 }
 
-
-function getUserPosition(user) {
-
-}
-
-
-function removeUser({id}) {
-    
-
-}
 
 
 async function createTable(sql, cb) {
@@ -55,8 +52,5 @@ async function createTable(sql, cb) {
 
 
 module.exports = {
-    createTable,
-    removeUser,
-    addUserToQueue,
-    getUserPosition
+    query
 }
