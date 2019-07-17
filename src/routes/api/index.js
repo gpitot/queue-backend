@@ -19,7 +19,7 @@ router.post(`/add`, (req, res, next) => {
     if (validate !== true) {
         res.sendStatus(400).json({success:false, message:`missing ${validate} field`})
     }
-    const {name, phone, genderPreference, doctor}
+    const {name, phone, genderPreference, doctor} = user;
     const sql = `INSERT INTO QUEUE (name, phone, genderPreference, dr_id) VALUES ($1, $2, $3, $4)`;
     const values = [name, phone, genderPreference, doctor];
     query(sql, values).then((result) => {
