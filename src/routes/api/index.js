@@ -22,18 +22,26 @@ router.post(`/add`, (req, res, next) => {
     const {name, phone, genderPreference, doctor} = user;
     const sql = `INSERT INTO QUEUE (name, phone, genderPreference, dr_id) VALUES ($1, $2, $3, $4)`;
     const values = [name, phone, genderPreference, doctor];
-    query(sql, values).then((result) => {
-        res.json(result);
-    });
+    query(sql, values)
+        .then((result) => {
+            res.json(result);
+        })
+        .catch((err) => {
+            res.sendStatus(400).json(result);
+        })
 });
 
 
 router.post('/add_custom', (req, res, next) => {
     const sql = req.body.sql;
     const values = req.body.values;
-    query(sql, values).then((result) => {
-        res.json(result);
-    });
+    query(sql, values)
+        .then((result) => {
+            res.json(result);
+        })
+        .catch((err) => {
+            res.sendStatus(400).json(err);
+        });
 })
 
 //removes user from queue, (success or failure) (client showed up or not)
