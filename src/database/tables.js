@@ -29,6 +29,7 @@ const QUEUE = `
         name VARCHAR (400) NOT NULL,
         phone VARCHAR(15) NOT NULL,
         genderPreference VARCHAR (15) NOT NULL,
+        created_at DEFAULT NOW(),
         dr_id serial REFERENCES DOCTORS(id)
     );
 `;
