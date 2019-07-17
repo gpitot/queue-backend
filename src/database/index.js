@@ -1,4 +1,12 @@
-const { Pool } = require('pg')
+const { Pool } = require('pg');
+
+const {
+    ORGS,
+    DOCTORS,
+    QUEUE
+} = require('./tables');
+
+
 const pool = new Pool({
     connectionString : process.env.DATABASE_URL,
     ssl : true,
@@ -25,11 +33,23 @@ function removeUser({id}) {
 
 
 async function createTable(sql, cb) {
-    pool.query(sql, (err, res) => {
-        console.log(err, res);
-        pool.end()
-        cb({success : true})
-    });
+    pool.connect((err, client, release) => {
+        
+        client.query(ORGS, (err, res) => {
+            console.log('ORGS - ', res);
+            client.query(DOCTORS, (err, res) => {
+                console.log('DOCS - ', res);
+
+                client.query(QUEUE, (err, res) => {
+                    console.log('QUEUE - ', res);
+
+                    release();
+                    cb({success : true});
+                })
+            })
+
+        })
+    })
 }
 
 
