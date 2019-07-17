@@ -18,18 +18,22 @@ const pool = new Pool({
 
 
 async function query(sql, values) {
-    pool.connect((err, client, done) => {
+   
+    return new Promise((resolve, reject) => {
+        pool.connect((err, client, done) => {
 
-        if (err) throw err;
+            if (err) throw err;
 
-        client.query(sql, values, (err, res) => {
-            done();
-            if (err) {
-                return {success : false, err};
-            }
-            return {success:true, res}
+            client.query(sql, values, (err, res) => {
+                done();
+                if (err) {
+                    reject({success : false, err})
+                }
+                resolve({success:true, res});
+            })
         })
     })
+    
     
 }
 
