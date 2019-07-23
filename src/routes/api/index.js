@@ -52,7 +52,7 @@ router.post(`/remove`, (req, res, next) => {
         res.sendStatus(400).json({success:false,message:'missing id field'})
     }
     const sql = 'DELETE FROM QUEUE WHERE id = $1';
-    const values = req.body.id;
+    const values = [req.body.id];
     query(sql, values)
         .then((result) => {
             res.json(result);
