@@ -37,16 +37,29 @@ router.post('/add_custom', (req, res, next) => {
     const values = req.body.values;
     query(sql, values)
         .then((result) => {
+            console.log('THEN');
             res.json(result);
         })
         .catch((err) => {
+            console.log('CATCH');
             res.sendStatus(400).json(err);
         });
 })
 
 //removes user from queue, (success or failure) (client showed up or not)
 router.post(`/remove`, (req, res, next) => {
-
+    if (!validateJson(req.body, ['id'])) {
+        res.sendStatus(400).json({success:false,message:'missing id field'})
+    }
+    const sql = 'DELETE FROM QUEUE WHERE id = $1';
+    const values = req.body.id;
+    query(sql, values)
+        .then((result) => {
+            res.json(result);
+        })
+        .catch((err) => {
+            res.sendStatus(400).json(err);
+        });
 });
 
 //gets position in queue

@@ -27,9 +27,11 @@ async function query(sql, values) {
             client.query(sql, values, (err, res) => {
                 done();
                 if (err) {
-                    reject({success : false, err})
+                    console.log('ERROR - ', err);
+                    return reject({success : false, err})
                 }
-                resolve({success:true, res});
+                console.log('SUCCESS');
+                return resolve({success:true, res});
             })
         })
     })
