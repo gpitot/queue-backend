@@ -12,12 +12,12 @@ var {
 //adds user to queue
 router.post(`/add`, (req, res, next) => {
     if (!validateJson(req.body, ['user'])) {
-        res.sendStatus(400).json({success:false,message:'missing user field'})
+        res.status(400).json({success:false,message:'missing user field'})
     }
     const {user} = req.body;
     const validate = validateJson(user, ['name', 'phone', 'genderPreference', 'doctor']);
     if (validate !== true) {
-        res.sendStatus(400).json({success:false, message:`missing ${validate} field`})
+        res.status(400).json({success:false, message:`missing ${validate} field`})
     }
     const {name, phone, genderPreference, doctor} = user;
     const sql = `INSERT INTO QUEUE (name, phone, genderPreference, dr_id) VALUES ($1, $2, $3, $4)`;
@@ -27,7 +27,7 @@ router.post(`/add`, (req, res, next) => {
             res.json(result);
         })
         .catch((err) => {
-            res.sendStatus(400).json(result);
+            res.status(400).json(err);
         })
 });
 
@@ -42,7 +42,7 @@ router.post('/add_custom', (req, res, next) => {
         })
         .catch((err) => {
             console.log('CATCH');
-            res.sendStatus(400).json(err);
+            res.status(400).json(err);
         });
 })
 
@@ -58,7 +58,7 @@ router.post(`/remove`, (req, res, next) => {
             res.json(result);
         })
         .catch((err) => {
-            res.sendStatus(400).json(err);
+            res.status(400).json(err);
         });
 });
 
